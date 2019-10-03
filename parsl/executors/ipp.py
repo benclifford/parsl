@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class IPyParallelExecutor(ParslExecutor, RepresentationMixin):
-    """The IPython Parallel executor.
+    """The IPython Parallel executor - deprecated
 
     This executor uses IPythonParallel's pilot execution system to manage multiple processes
     running locally or remotely.
