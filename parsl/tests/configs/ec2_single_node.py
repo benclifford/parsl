@@ -16,6 +16,10 @@ from parsl.providers import AWSProvider
 from parsl.config import Config
 from parsl.executors import HighThroughputExecutor
 from parsl.tests.utils import get_rundir
+from parsl.data_provider.http import HTTPInTaskStaging
+from parsl.data_provider.ftp import FTPInTaskStaging
+from parsl.data_provider.rsync import RSyncStaging
+
 
 # If you are a developer running tests, make sure to update parsl/tests/configs/user_opts.py
 # If you are a user copying-and-pasting this as an example, make sure to either
@@ -27,6 +31,7 @@ from parsl.tests.configs.user_opts import user_opts
 config = Config(
     executors=[
         HighThroughputExecutor(
+            storage_access=[HTTPInTaskStaging(), FTPInTaskStaging(), RSyncStaging("benc@"+user_opts['public_ip'])],
             label='ec2_single_node',
             address=user_opts['public_ip'],
             provider=AWSProvider(
@@ -40,6 +45,7 @@ config = Config(
                 max_blocks=1,
                 min_blocks=0,
                 walltime='01:00:00',
+                linger=True
             ),
         )
     ],
